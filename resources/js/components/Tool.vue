@@ -54,35 +54,35 @@
             },
 
             getAuthorizedTokens: function () {
-                axios.get('/oauth/tokens')
+              Nova.request().get('/oauth/tokens')
                     .then(response => {
                         this.authorizedTokens = Object.assign([], response.data);
                     });
             },
 
             getAccessTokens: function () {
-                axios.get('/oauth/personal-access-tokens')
+                Nova.request().get('/oauth/personal-access-tokens')
                     .then(response => {
                         this.accessTokens = Object.assign([], response.data);
                     });
             },
 
             getScopes() {
-                axios.get('/oauth/scopes')
+                Nova.request().get('/oauth/scopes')
                     .then(response => {
                         this.scopes = Object.assign([], response.data);
                     });
             },
 
             revokeAuthorizedToken: function (token) {
-                axios.delete('/oauth/tokens/' + token.id)
+                Nova.request().delete('/oauth/tokens/' + token.id)
                     .then(response => {
                         this.getAuthorizedTokens();
                     });
             },
 
             getClients: function () {
-                axios.get('/oauth/clients')
+                Nova.request().get('/oauth/clients')
                     .then(response => {
                         this.clients = Object.assign([], response.data);
                     });
@@ -116,7 +116,7 @@
             persistClient(method, uri) {
                 this.clientErrors = Object.assign({});
 
-                axios[method](
+                Nova.request()[method](
                         uri,
                         {
                             name: this.clientName,
@@ -137,7 +137,7 @@
             },
 
             destroyClient(client) {
-                axios.delete('/oauth/clients/' + client.id)
+                Nova.request().delete('/oauth/clients/' + client.id)
                     .then(response => {
                         this.getClients();
                     });
@@ -146,7 +146,7 @@
             storeAccessToken: function () {
                 this.accessToken = "";
                 this.tokenErrors = Object.assign({});
-                axios.post(
+                Nova.request().post(
                         '/oauth/personal-access-tokens',
                         {
                             name: this.tokenName,
@@ -172,7 +172,7 @@
             },
 
             revokeToken: function (token) {
-                axios.delete('/oauth/personal-access-tokens/' + token.id)
+                Nova.request().delete('/oauth/personal-access-tokens/' + token.id)
                     .then(response => {
                         this.getAccessTokens();
                     });
