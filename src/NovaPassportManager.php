@@ -27,4 +27,17 @@ class NovaPassportManager extends Tool
     {
         return view('nova-passport-manager::navigation');
     }
+
+    /**
+     * Build the menu that renders the navigation links for the tool.
+     *
+     * @param  Request  $request
+     * @return mixed
+     */
+    public function menu(Request $request) : MenuSection
+    {
+        return MenuSection::make('Nova Passport Manager')
+            ->path('/nova-passport-manager')
+            ->icon('key');
+    }
 }
