@@ -198,27 +198,28 @@
                 v-show="authorizedTokens.length > 0"
                 class="relative"
             >
-                <div class="overflow-hidden overflow-x-auto relative rounded-lg">
+                <div class="w-full overflow-hidden overflow-x-auto relative rounded-lg">
                     <table
                         cellpadding="0"
                         cellspacing="0"
                         data-testid="resource-table"
-                        class="table w-full"
+                        class="w-full border-separate border-spacing-2 border border-slate-400"
                     >
                         <thead>
-                            <tr>
-                                <th class="w-16 text-center">ID</th>
-                                <th class="text-center">Name</th>
-                                <th class="text-center">Scopes</th>
-                                <th>&nbsp;</th>
+                            <tr class="bg-gray-50 dark:bg-gray-800">
+                                <th class="border border-slate-300 w-16 text-center">ID</th>
+                                <th class="border border-slate-300 text-center">Name</th>
+                                <th class="border border-slate-300 text-center">Scopes</th>
+                                <th class="border border-slate-300 ">&nbsp;</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr
                                 v-for="token in authorizedTokens"
                                 :key="token.id + '-' + token.client.name"
+                                class="bg-white dark:bg-gray-800 group-hover:bg-gray-50 dark:group-hover:bg-gray-900"
                             >
-                                <td>
+                                <td class="border border-slate-300">
                                     <span
                                         class="whitespace-no-wrap text-left"
                                         via-resource=""
@@ -227,7 +228,7 @@
                                         {{ token.id }}
                                     </span>
                                 </td>
-                                <td>
+                                <td class="border border-slate-300">
                                     <span
                                         class="whitespace-no-wrap text-left"
                                         via-resource=""
@@ -236,7 +237,7 @@
                                         {{ token.client.name }}
                                     </span>
                                 </td>
-                                <td>
+                                <td class="border border-slate-300">
                                     <span
                                         class="whitespace-no-wrap text-left"
                                         via-resource=""
@@ -245,7 +246,7 @@
                                         {{ token.scopes.join(', ') }}
                                     </span>
                                 </td>
-                                <td>
+                                <td class="border border-slate-300">
                                     <a
                                         class="action-link text-danger"
                                         @click="revokeAuthorizedToken(token)"
@@ -336,7 +337,7 @@
                     <button
                         v-show="showUpdateClientButton"
                         type="submit"
-                        class="btn btn-default btn-primary inline-flex items-center relative"
+                        class="flex-shrink-0 shadow rounded focus:outline-none ring-primary-200 dark:ring-gray-600 focus:ring bg-primary-500 hover:bg-primary-400 active:bg-primary-600 text-white dark:text-gray-800 inline-flex items-center font-bold px-4 h-9 text-sm flex-shrink-0"
                         @click="updateClient"
                     >
                         Update Client
@@ -344,7 +345,7 @@
                     <button
                         v-show="showCreateClientButton"
                         type="submit"
-                        class="btn btn-default btn-primary inline-flex items-center relative"
+                        class="flex-shrink-0 shadow rounded focus:outline-none ring-primary-200 dark:ring-gray-600 focus:ring bg-primary-500 hover:bg-primary-400 active:bg-primary-600 text-white dark:text-gray-800 inline-flex items-center font-bold px-4 h-9 text-sm flex-shrink-0"
                         @click="storeClient"
                     >
                         Create OAuth Client
@@ -363,10 +364,10 @@
 
             <table
                 v-show="clients.length > 0"
-                class="table w-full rounded"
+                class="w-full overflow-hidden overflow-x-auto relative rounded-lg"
             >
                 <thead>
-                    <tr>
+                    <tr class="bg-gray-50 dark:bg-gray-800">
                         <th class="w-16">ID</th>
                         <th>Name</th>
                         <th>Secret</th>
@@ -377,52 +378,50 @@
                     <tr
                         v-for="client in clients"
                         :key="'client-' + client.id"
+                        class="bg-white dark:bg-gray-800 group-hover:bg-gray-50 dark:group-hover:bg-gray-900"
                     >
-                        <td class="text-center">
+                        <td class="border border-slate-300 text-center">
                             {{ client.id }}
                         </td>
-                        <td>
+                        <td class="border border-slate-300">
                             {{ client.name }}
                         </td>
-                        <td>
+                        <td class="border border-slate-300">
                             <code>{{ client.secret }}</code>
                         </td>
-                        <td class="text-right">
-                            <a
-                                class="cursor-pointer inline"
-                                tabindex="-1"
-                                @click="editClient(client)"
-                            >
-                                <svg
-                                    class="fill-current ml-3"
-                                    aria-hidden="false"
-                                    focusable="true"
-                                    role="img"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 576 512"
-                                    width="20"
-                                    height="20"
+                        <td class="border border-slate-300 text-right">
+                            <div class="o1-flex o1-items-center o1-justify-end o1-space-x-0 text-gray-400">
+                                <a
+                                    aria-label="Edit"
+                                    class="cursor-pointer toolbar-button hover:o1-text-primary-500 o1-px-2 disabled:o1-opacity-50 disabled:o1-pointer-events-none v-popper--has-tooltip"
+                                    tabindex="-1"
+                                    @click="editClient(client)"
                                 >
-                                    <path d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"></path>
-                                </svg>
-                            </a>
-                            <a
-                                class="inline cursor-pointer text-danger"
-                                @click="destroyClient(client)"
-                            >
-                                <svg
-                                    class="fill-current ml-3"
-                                    aria-hidden="true"
-                                    focusable="false"
-                                    role="img"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 448 512"
-                                    width="20"
-                                    height="20"
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        width="24" height="24"
+                                        class="inline-block"
+                                        role="presentation"
+                                    >
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                    </svg>
+                                </a>
+                                <button
+                                    aria-label="Delete"
+                                    class="toolbar-button hover:o1-text-primary-500 o1-px-2 disabled:o1-opacity-50 disabled:o1-pointer-events-none v-popper--has-tooltip"
+                                    @click="destroyClient(client)"
                                 >
-                                    <path d="M268 416h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12zM432 80h-82.41l-34-56.7A48 48 0 0 0 274.41 0H173.59a48 48 0 0 0-41.16 23.3L98.41 80H16A16 16 0 0 0 0 96v16a16 16 0 0 0 16 16h16v336a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128h16a16 16 0 0 0 16-16V96a16 16 0 0 0-16-16zM171.84 50.91A6 6 0 0 1 177 48h94a6 6 0 0 1 5.15 2.91L293.61 80H154.39zM368 464H80V128h288zm-212-48h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12z"></path>
-                                </svg>
-                            </a>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                         stroke="currentColor" width="24" height="24" class="inline-block"
+                                         role="presentation">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                    </svg>
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
@@ -478,10 +477,11 @@
                         :multiple="true"
                         :hide-selected="true"
                         :close-on-select="false"
-                        :clear-on-select="false"
+                        :clear-on-select="true"
                         :preserve-search="false"
-                        :internal-search="false"
+                        :internal-search="true"
                         :preselect-first="false"
+                        :searchable="true"
                         :class="{'border-danger': tokenFieldHasError('scopes')}"
                         placeholder="Select scopes..."
                         label="description"
@@ -499,7 +499,7 @@
                 <div class="pt-6 pb-6 px-8 w-1/2">
                     <button
                         type="submit"
-                        class="btn btn-default btn-primary inline-flex items-center relative"
+                        class="flex-shrink-0 shadow rounded focus:outline-none ring-primary-200 dark:ring-gray-600 focus:ring bg-primary-500 hover:bg-primary-400 active:bg-primary-600 text-white dark:text-gray-800 inline-flex items-center font-bold px-4 h-9 text-sm flex-shrink-0"
                         @click="storeAccessToken"
                     >
                         Create Access Token
@@ -537,7 +537,7 @@
                 <div class="pt-0 pb-6 px-8 w-1/2">
                     <button
                         type="submit"
-                        class="btn btn-default btn-danger inline-flex items-center relative"
+                        class="flex-shrink-0 shadow rounded focus:outline-none ring-primary-200 dark:ring-gray-600 focus:ring bg-primary-500 hover:bg-primary-400 active:bg-primary-600 text-white dark:text-gray-800 inline-flex items-center font-bold px-4 h-9 text-sm flex-shrink-0"
                         @click="clearAccessToken"
                     >
                         Close
@@ -559,54 +559,65 @@
                 v-show="accessTokens.length > 0"
                 class="relative"
             >
-                <div class="overflow-hidden overflow-x-auto relative rounded-lg">
+                <div class="w-full overflow-hidden overflow-x-auto relative rounded-lg">
                     <table
                         cellpadding="0"
                         cellspacing="0"
                         data-testid="resource-table"
-                        class="table w-full"
+                        class="w-full border-separate border-spacing-2 border border-slate-400"
                     >
-                        <thead>
-                            <tr>
-                                <th class="text-center">Name</th>
-                                <th class="text-center">Expires At</th>
-                                <th class="text-center">Scopes</th>
-                                <th class="w-16">&nbsp;</th>
+                        <thead >
+                            <tr class="bg-gray-50 dark:bg-gray-800">
+                                <th class="border border-slate-300 text-center">Name</th>
+                                <th class="border border-slate-300 text-center">Expires At</th>
+                                <th class="border border-slate-300 text-center">Scopes</th>
+                                <th class="border border-slate-300 w-16">&nbsp;</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr
                                 v-for="token in accessTokens"
                                 :key="token.id"
+                                class="bg-white dark:bg-gray-800 group-hover:bg-gray-50 dark:group-hover:bg-gray-900"
                             >
-                                <td>
-                                    <span
-                                        class="whitespace-no-wrap text-left"
-                                        via-resource=""
-                                        via-resource-id=""
+                                <td class="border border-slate-300">
+                                    <div class="text-left"
+                                         via-resource=""
+                                         via-resource-id=""
                                     >
-                                        {{ token.name }}                                        
-                                    </span>
+                                        <span
+                                            class="whitespace-no-wrap"
+                                        >
+                                            {{ token.name }}
+                                        </span>
+                                    </div>
                                 </td>
-                                <td>
-                                    <span
-                                        class="whitespace-no-wrap text-right"
-                                        via-resource=""
-                                        via-resource-id=""
+                                <td class="border border-slate-300">
+                                    <div class="text-left"
+                                         via-resource=""
+                                         via-resource-id=""
                                     >
-                                        {{ token.expires_at }}                                        
-                                    </span>
+                                        <span
+                                            class="whitespace-no-wrap"
+                                            via-resource=""
+                                            via-resource-id=""
+                                        >
+                                            {{ token.expires_at }}
+                                        </span>
+                                    </div>
                                 </td>
-                                <td>
-                                    <span
-                                        class="whitespace-no-wrap text-right"
-                                        via-resource=""
-                                        via-resource-id=""
-                                    >
-                                        {{ token.scopes.join(", ") }}                                        
-                                    </span>
+                                <td class="w-1/2  border border-slate-300">
+                                    <div class="w-full overflow-x-auto">
+                                        <span
+                                            class="whitespace-no-wrap text-right"
+                                            via-resource=""
+                                            via-resource-id=""
+                                        >
+                                            {{ token.scopes.join(", ") }}
+                                        </span>
+                                    </div>
                                 </td>
-                                <td class="whitespace-no-wrap text-right">
+                                <td class="whitespace-no-wrap text-right border border-slate-300">
                                     <a
                                         class="cursor-pointer text-danger"
                                         @click="revokeToken(token)"
