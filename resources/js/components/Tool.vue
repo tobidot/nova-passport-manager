@@ -182,7 +182,7 @@ export default {
 
 
 <template>
-    <div>
+    <div class="nova-passport-manager">
         <h1>Passport Manager</h1>
         <h2 class="mt-8 text-90 font-normal text-2xl">Authorized Applications</h2>
         <div class="card mt-3">
