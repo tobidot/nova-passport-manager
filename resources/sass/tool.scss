@@ -1,5 +1,6 @@
 .nova-passport-manager {
-  //@import "~bootstrap/scss/bootstrap";
+  @import "~bootstrap/scss/bootstrap";
+
   @keyframes spinning {
     0% {
       transform: rotate(0)
